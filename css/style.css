@@ -66,3 +66,16 @@ header {
 #searchBtn:hover, #prevBtn:hover, #nextBtn:hover, #resetBtn:hover {
   opacity: 0.8;
 }
+
+
+/* Mi CSS */
+
+.ventana-flotante {
+  position: fixed; /* flotante */
+  top: 30%;
+  left: 50%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 999; /* posición por encima de resto de elementos */
+}
