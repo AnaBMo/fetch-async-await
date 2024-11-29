@@ -39,7 +39,9 @@ const obtenerlistaPokemons = async (paginaActual) => {
 
         const data = await response.json(); 
          /* ***** */ console.log('🟩 Respuesta después json()', data); // muestra array con los 10 primeros
-         mostrarListaPokemons(data.results);
+         await mostrarListaPokemons(data.results);
+
+        
 
     } catch (error) {
         console.error('🔴 Error al obtener los datos:', error.message); 
@@ -52,15 +54,21 @@ obtenerlistaPokemons();
 /****************************
 2. MOSTRAR lista de Pokemons
 *****************************/
-const mostrarListaPokemons = (pokemons) => {
+const mostrarListaPokemons = async (pokemons) => {
     /* ***** */ console.log('🟦 ¿Se muestra la lista de Pokemons?', pokemons); 
     listaPokemons.innerHTML = ''; 
     
-    pokemons.forEach(pokemon => {
+    pokemons.forEach(async(pokemon) =>  {
+
+        const pokemonResponse = await fetch(pokemon.url);
+        const pokemonData = await pokemonResponse.json();
+        /* ***** */ console.log('🟦 ¿Response?', pokemonData);
+        
         const contenedorPokemon = document.createElement('li');
         contenedorPokemon.classList.add('pokemon');
         contenedorPokemon.innerHTML = `
-            <h3>${pokemon.name}</h3>`;
+            <h2>${pokemon.name}</h2>
+            <img class = "imagenPerdida" src= "${pokemonData.sprites.front_default}" alt= "${pokemon.name}"/>`;
 
         listaPokemons.appendChild(contenedorPokemon);
 
@@ -68,7 +76,7 @@ const mostrarListaPokemons = (pokemons) => {
         contenedorPokemon.addEventListener('click', () => {
             obtenerDetallePokemon(pokemon.name);
         });
-    });
+    })
 };
 
 /****************************
@@ -157,5 +165,3 @@ botonBuscarPokemon.addEventListener('click', async () => {
 botonResetear.addEventListener('click', async () => {
     location.reload();
 });
-
-
