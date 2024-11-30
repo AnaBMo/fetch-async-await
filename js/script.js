@@ -14,7 +14,7 @@
     - Muestra detalle más específico de cada uno.
 7. Botón RESET
 
-** Maneja eventos de botones y actualiza dinámicamente la interfaz. pokémon **
+** Maneja eventos de botones y actualiza dinámicamente la interfaz. **
 ********************************************************************************************* */
 
 let paginaActual = 1;
@@ -62,13 +62,14 @@ const mostrarListaPokemons = async (pokemons) => {
 
         const pokemonResponse = await fetch(pokemon.url);
         const pokemonData = await pokemonResponse.json();
-        /* ***** */ console.log('🟦 ¿Response?', pokemonData);
+        /* ***** */ console.log('🟨 ¿Response?', pokemonData);
         
         const contenedorPokemon = document.createElement('li');
         contenedorPokemon.classList.add('pokemon');
         contenedorPokemon.innerHTML = `
-            <h2>${pokemon.name}</h2>
-            <img class = "imagenPerdida" src= "${pokemonData.sprites.front_default}" alt= "${pokemon.name}"/>`;
+            
+            <img class = "imagenPerdida" src= "${pokemonData.sprites.front_default}" alt= "${pokemon.name}"/>
+            <h2>${pokemon.name}</h2>`;
 
         listaPokemons.appendChild(contenedorPokemon);
 
@@ -86,17 +87,17 @@ const obtenerDetallePokemon = async (nombrePokemon) => {
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombrePokemon}`);
         if (!response.ok) {
-            console.log('🔴 Pokemon no encontrado.');
+            /* ***** */console.log('🔴 Pokemon no encontrado.');
             return;
         }
 
         const pokemon = await response.json();
-        /* ***** */ console.log('🟨 Pokemon encontrado:', pokemon);
+        /* ***** */ console.log('🔵 Pokemon encontrado:', pokemon);
 
         mostrarDetallePokemon(pokemon); // ventana emergente
 
     } catch (error) {
-        console.error("Error al obtener detalles del Pokémon:", error);
+        console.error("Error al obtener detalles del Pokemon:", error);
     }
 };
 
